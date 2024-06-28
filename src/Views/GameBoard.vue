@@ -15,15 +15,12 @@
 
   .game-board{
     position: absolute;
-    width:80vw;
-    height:80vw;
-    height:80vw;
     overflow:hidden;
 
     background-color: blue;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 9em 9em 9em 9em 9em;
+    grid-template-columns: 9em 9em 9em 9em 9em;
 
   }
 
@@ -53,6 +50,13 @@
   .c4{ grid-row:3; grid-column:4; }
   .c5{ grid-row:3; grid-column:5; }
   
+  .game-piece{
+    width:100%;
+    height:100%;
+    object-fit:scale-down;
+    cursor: grab;
+    
+  }
 
 </style>
 
@@ -63,13 +67,11 @@
   <!-- a -->
   <div id="a1" class="a1 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)">
     <img 
-      id="drag1" 
-      src="../../public/img_logo.gif"
+    id="piece-1" 
+    src="../../public/piece-1.png"
       draggable="true" 
       @dragstart="dragStart($event)"
-      width="50" 
-      height="50"
-      style="cursor: grab;"
+      class="game-piece"
     /> 
   </div>
   <div id="a2" class="a2 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)" ></div>
@@ -81,12 +83,28 @@
   <div id="b1" class="b1 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
   <div id="b2" class="b2 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
   <div id="b3" class="b3 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
-  <div id="b4" class="b4 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="b4" class="b4 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)">
+    <img 
+    id="piece-2" 
+    src="../../public/piece-2.png"
+      draggable="true" 
+      @dragstart="dragStart($event)"
+      class="game-piece"
+    /> 
+  </div>
   <div id="b5" class="b5 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
 
   <!-- c -->
   <div id="c1" class="c1 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
-  <div id="c2" class="c2 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="c2" class="c2 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)">
+    <img 
+    id="piece-3" 
+    src="../../public/piece-3.png"
+      draggable="true" 
+      @dragstart="dragStart($event)"
+      class="game-piece"
+    /> 
+  </div>
   <div id="c3" class="c3 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
   <div id="c4" class="c4 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
   <div id="c5" class="c5 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
@@ -111,24 +129,6 @@
   </tr>
 </table>
 
-<!-- Game Pieces -->
-  <img 
-    id="drag3" 
-    src="../../public/img_logo3.gif"
-    draggable="true" 
-    @dragstart="dragStart($event)"
-    width="50" 
-    height="50"
-  /> 
-
-  <img 
-    id="drag2" 
-    src="../../public/img_logo2.gif"
-    draggable="true" 
-    @dragstart="dragStart($event)"
-    width="50" 
-    height="50"
-  /> 
 
 
 </div>
