@@ -1,37 +1,50 @@
 <script setup lang="ts">
 
-function allowDrop(ev: any) {
+const dragOver = (ev: any) => {
+  console.log(`allowDrop(${ev})`);
   ev.preventDefault();
 }
 
-function drag(ev: any) {
+const dragStart = (ev: any) => {
+  console.log(`drag(${ev})`);
   ev.dataTransfer.setData("text", ev.target.id);
 }
 
-function drop(ev: any) {
+const drop = (ev: any) => {
+  console.log(`drop(${ev})`);
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   ev.target.appendChild(document.getElementById(data));
 }
+
+
 </script>
 
 <template>
 
-<div 
+  <div 
   id="div1" 
-  ondrop="drop(event)" 
-  ondragover="allowDrop(event)"
->[]</div>
+    @drop="drop($event)" 
+    @dragover="dragOver($event)"
+    style="border:2px solid grey;width:150px;height:150px;margin-bottom:15px"
+  ></div>
 
-<img 
-  id="drag1" 
-  src="../public/img_logo.gif"
-  draggable="true" 
-  ondragstart="drag(event)"
-  width="70" 
-  height="70"
-/>  
+  <div 
+    id="div2" 
+    @drop="drop($event)" 
+    @dragover="dragOver($event)"
+    style="border:2px solid grey;width:150px;height:150px;"
+  ></div>
 
+  <img 
+    id="drag1" 
+    src="../public/img_logo.gif"
+    draggable="true" 
+    @dragstart="dragStart($event)"
+    width="150" 
+    height="150"
+    style="cursor: grab;"
+  /> 
 
 </template>
 
