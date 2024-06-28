@@ -1,4 +1,17 @@
+
 <style scoped>
+
+  table{
+    color:white;
+    width:100%;
+    border:1px solid white;
+    text-wrap:nowrap;
+  }
+
+  table td{
+    width:100%;
+    text-wrap:nowrap;
+  }
 
   .game-board{
     position: absolute;
@@ -16,18 +29,11 @@
 
   .game-square{
     display: flex;
-  align-items: center;
-  justify-content: center;
+    align-items: center;
+    justify-content: center;
   }
-
-  .game-square-i{
-    background-color: red;
-
-  }
-
-  .game-square-o{
-    background-color: darkslategrey;
-  }
+  .game-square-i{ background-color: red; }
+  .game-square-o{ background-color: darkslategrey; }
 
   .a1{ grid-row:1; grid-column:1; }
   .a2{ grid-row:1; grid-column:2; }
@@ -55,7 +61,7 @@
     class="game-board"
   >
   <!-- a -->
-  <div class="a1 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)">
+  <div id="a1" class="a1 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)">
     <img 
       id="drag1" 
       src="../../public/img_logo.gif"
@@ -66,25 +72,46 @@
       style="cursor: grab;"
     /> 
   </div>
-  <div class="a2 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)" ></div>
-  <div class="a3 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)" ></div>
-  <div class="a4 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)" ></div>
-  <div class="a5 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)" ></div>
+  <div id="a2" class="a2 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)" ></div>
+  <div id="a3" class="a3 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)" ></div>
+  <div id="a4" class="a4 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)" ></div>
+  <div id="a5" class="a5 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)" ></div>
   
   <!-- b -->
-  <div class="b1 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
-  <div class="b2 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
-  <div class="b3 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
-  <div class="b4 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
-  <div class="b5 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="b1" class="b1 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="b2" class="b2 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="b3" class="b3 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="b4" class="b4 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="b5" class="b5 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
 
   <!-- c -->
-  <div class="c1 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
-  <div class="c2 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
-  <div class="c3 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
-  <div class="c4 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
-  <div class="c5 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="c1" class="c1 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="c2" class="c2 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="c3" class="c3 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="c4" class="c4 game-square game-square-o" @drop="drop($event)" @dragover="dragOver($event)"></div>
+  <div id="c5" class="c5 game-square game-square-i" @drop="drop($event)" @dragover="dragOver($event)"></div>
 
+<!-- Info -->
+<table>
+  <tr>
+    <td>Object Id:</td>
+    <td>{{ object }}</td>
+  </tr>
+  <tr>
+    <td>Start:</td>
+    <td>{{ start }}</td>
+  </tr>
+  <tr>
+    <td>Over:</td>
+    <td>{{ over }}</td>
+  </tr>
+  <tr>
+    <td>Drop:</td>
+    <td>{{ dropped }}</td>
+  </tr>
+</table>
+
+<!-- Game Pieces -->
   <img 
     id="drag3" 
     src="../../public/img_logo3.gif"
@@ -92,9 +119,8 @@
     @dragstart="dragStart($event)"
     width="50" 
     height="50"
-    style="cursor: grab;"
   /> 
-  
+
   <img 
     id="drag2" 
     src="../../public/img_logo2.gif"
@@ -102,32 +128,46 @@
     @dragstart="dragStart($event)"
     width="50" 
     height="50"
-    style="cursor: grab;"
   /> 
 
 
-  </div>
+</div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
+  const object = ref("");
+  const start = ref("");
+  const over = ref("");
+  const dropped = ref("");
 
   const dragOver = (ev: any) => {
-    console.log(`allowDrop(${ev})`);
+    over.value = (((((ev as DragEvent).target) as HTMLElement).id) );
+
     ev.preventDefault();
   }
+  
 
   const dragStart = (ev: any) => {
-    console.log(`drag(${ev})`);
+    object.value = (((ev as DragEvent).target) as HTMLElement).id;
     ev.dataTransfer.setData("text", ev.target.id);
+    
+    start.value = (((((ev as DragEvent).target) as HTMLElement).parentElement) as HTMLElement).id;
   }
 
   const drop = (ev: any) => {
-    console.log(`drop(${ev})`);
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
-  }
+    
+    dropped.value = (((ev as DragEvent).target) as HTMLElement).id;
+
+  } 
 
 
 </script>
+
+
+
 
